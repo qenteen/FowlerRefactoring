@@ -33,29 +33,7 @@ namespace MovieShop
 
             foreach (var rental in _rentals)
             {
-                double thisAmount = 0;
-
-                // Определение суммы для каждой строки
-                switch (rental.Movie.PriceCode)
-                {
-                    case Movie.Regular:
-                        thisAmount += 2;
-                        if (rental.DaysRented > 2)
-                        {
-                            thisAmount += (rental.DaysRented - 2) * 1.5;
-                        }
-                        break;
-                    case Movie.NewRelease:
-                        thisAmount += rental.DaysRented * 3;
-                        break;
-                    case Movie.Childrens:
-                        thisAmount += 1.5;
-                        if (rental.DaysRented > 3)
-                        {
-                            thisAmount += (rental.DaysRented - 3) * 1.5;
-                        }
-                        break;
-                }
+                double thisAmount = GetCost(rental);
 
                 // Начисление бонусных очков
                 frequentRenterPoints++;
@@ -78,6 +56,34 @@ namespace MovieShop
             result += $"Вы заработали {frequentRenterPoints} бонусных очков";
 
             return result;
+        }
+
+        private double GetCost(Rental rental)
+        {
+            double cost = 0;
+
+            switch (rental.Movie.PriceCode)
+            {
+                case Movie.Regular:
+                    cost += 2;
+                    if (rental.DaysRented > 2)
+                    {
+                        cost += (rental.DaysRented - 2) * 1.5;
+                    }
+                    break;
+                case Movie.NewRelease:
+                    cost += rental.DaysRented * 3;
+                    break;
+                case Movie.Childrens:
+                    cost += 1.5;
+                    if (rental.DaysRented > 3)
+                    {
+                        cost += (rental.DaysRented - 3) * 1.5;
+                    }
+                    break;
+            }
+
+            return cost;
         }
     }
 }

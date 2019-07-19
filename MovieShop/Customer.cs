@@ -33,7 +33,7 @@ namespace MovieShop
 
             foreach (var rental in _rentals)
             {
-                double thisAmount = GetCost(rental);
+                double thisAmount = rental.GetCost();
 
                 // Начисление бонусных очков
                 frequentRenterPoints++;
@@ -56,34 +56,6 @@ namespace MovieShop
             result += $"Вы заработали {frequentRenterPoints} бонусных очков";
 
             return result;
-        }
-
-        private double GetCost(Rental rental)
-        {
-            double cost = 0;
-
-            switch (rental.Movie.PriceCode)
-            {
-                case Movie.Regular:
-                    cost += 2;
-                    if (rental.DaysRented > 2)
-                    {
-                        cost += (rental.DaysRented - 2) * 1.5;
-                    }
-                    break;
-                case Movie.NewRelease:
-                    cost += rental.DaysRented * 3;
-                    break;
-                case Movie.Childrens:
-                    cost += 1.5;
-                    if (rental.DaysRented > 3)
-                    {
-                        cost += (rental.DaysRented - 3) * 1.5;
-                    }
-                    break;
-            }
-
-            return cost;
         }
     }
 }

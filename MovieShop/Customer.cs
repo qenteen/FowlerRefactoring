@@ -33,8 +33,6 @@ namespace MovieShop
 
             foreach (var rental in _rentals)
             {
-                double thisAmount = rental.GetCost();
-
                 // Начисление бонусных очков
                 frequentRenterPoints++;
 
@@ -46,9 +44,9 @@ namespace MovieShop
                 }
 
                 // Вывод результатов для каждого проката
-                result += $"\t{rental.Movie.Title}\t{thisAmount}\n";
+                result += $"\t{rental.Movie.Title}\t{rental.GetCost()}\n";
 
-                totalAmount += thisAmount;
+                totalAmount += rental.GetCost();
             }
 
             // Добавление колонтитула

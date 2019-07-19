@@ -27,25 +27,41 @@ namespace MovieShop
 
         public string GetStatement()
         {
-            double totalAmount = 0;
-            int frequentRenterPoints = 0;
             string result = $"Прокат {Name}\n";
 
             foreach (var rental in _rentals)
             {
-                frequentRenterPoints += rental.GetFrequentRenterPoints();
-
                 // Вывод результатов для каждого проката
                 result += $"\t{rental.Movie.Title}\t{rental.GetCost()}\n";
-
-                totalAmount += rental.GetCost();
             }
 
             // Добавление колонтитула
-            result += $"Сумма задолженности: {totalAmount}\n";
-            result += $"Вы заработали {frequentRenterPoints} бонусных очков";
+            result += $"Сумма задолженности: {GetTotalRentalCost()}\n";
+            result += $"Вы заработали {GetTotalFrequentRenterPoints()} бонусных очков";
 
             return result;
+        }
+
+        private double GetTotalRentalCost()
+        {
+            double totalCost = 0;
+            foreach (var rental in _rentals)
+            {
+                totalCost += rental.GetCost();
+            }
+
+            return totalCost;
+        }
+
+        private int GetTotalFrequentRenterPoints()
+        {
+            int totalPoints = 0;
+            foreach (var rental in _rentals)
+            {
+                totalPoints += rental.GetFrequentRenterPoints();
+            }
+
+            return totalPoints;
         }
     }
 }

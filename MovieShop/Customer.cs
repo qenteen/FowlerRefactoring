@@ -33,15 +33,7 @@ namespace MovieShop
 
             foreach (var rental in _rentals)
             {
-                // Начисление бонусных очков
-                frequentRenterPoints++;
-
-                // Бонус за двухдневный прокат новинки
-                if (rental.Movie.PriceCode == Movie.NewRelease
-                    && rental.DaysRented > 1)
-                {
-                    frequentRenterPoints++;
-                }
+                frequentRenterPoints += rental.GetFrequentRenterPoints();
 
                 // Вывод результатов для каждого проката
                 result += $"\t{rental.Movie.Title}\t{rental.GetCost()}\n";

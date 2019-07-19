@@ -50,5 +50,15 @@ namespace MovieShop
 
             return cost;
         }
+
+        public int GetFrequentRenterPoints()
+        {
+            // Двойной бонус за долгий прокат новинки
+            if (Movie.PriceCode == Movie.NewRelease && DaysRented > 1)
+            {
+                return 2;
+            }
+            return 1;
+        }
     }
 }

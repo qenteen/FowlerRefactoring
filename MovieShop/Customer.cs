@@ -42,6 +42,24 @@ namespace MovieShop
             return result;
         }
 
+        public string GetHtmlStatement()
+        {
+            string result = $"<html>Прокат {Name}\n";
+
+            foreach (var rental in _rentals)
+            {
+                // Вывод результатов для каждого проката
+                result += $"\t{rental.Movie.Title}\t{rental.GetCost()}\n";
+            }
+
+            // Добавление колонтитула
+            result += $"Сумма задолженности: {GetTotalRentalCost()}\n";
+            result += $"Вы заработали {GetTotalFrequentRenterPoints()} бонусных очков";
+            result += "</html>";
+
+            return result;
+        }
+
         private double GetTotalRentalCost()
         {
             double totalCost = 0;

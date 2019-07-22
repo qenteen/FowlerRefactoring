@@ -29,5 +29,43 @@ namespace MovieShop
             _title = title;
             _priceCode = priceCode;
         }
+
+        public double GetCost(int daysRented)
+        {
+            double cost = 0;
+
+            switch (PriceCode)
+            {
+                case Regular:
+                    cost += 2;
+                    if (daysRented > 2)
+                    {
+                        cost += (daysRented - 2) * 1.5;
+                    }
+                    break;
+                case NewRelease:
+                    cost += daysRented * 3;
+                    break;
+                case Childrens:
+                    cost += 1.5;
+                    if (daysRented > 3)
+                    {
+                        cost += (daysRented - 3) * 1.5;
+                    }
+                    break;
+            }
+
+            return cost;
+        }
+
+        public int GetFrequentRenterPoints(int daysRented)
+        {
+            // Двойной бонус за долгий прокат новинки
+            if (PriceCode == NewRelease && daysRented > 1)
+            {
+                return 2;
+            }
+            return 1;
+        }
     }
 }

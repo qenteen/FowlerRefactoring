@@ -11,23 +11,18 @@ namespace MovieShop
     /// </summary>
     class Movie
     {
+        Price _priceState;
         public const int Regular = 0;
         public const int NewRelease = 1;
         public const int Childrens = 2;
 
-        private string _title;
-        private int _priceCode;
-
-        public string Title { get => _title; }
-        public int PriceCode {
-            get => _priceCode;
-            set => _priceCode = value;
-        }
+        public string Title { get; }
+        public int PriceCode { get; set; }
 
         public Movie(string title, int priceCode)
         {
-            _title = title;
-            _priceCode = priceCode;
+            Title = title;
+            PriceCode = priceCode;
         }
 
         public double GetCost(int daysRented)

@@ -11,16 +11,13 @@ namespace MovieShop
     /// </summary>
     class Rental
     {
-        private Movie _movie;
-        private int _daysRented;
-
-        public Movie Movie { get => _movie; }
-        public int DaysRented { get => _daysRented; }
+        public Movie Movie { get; }
+        public int DaysRented { get; }
 
         public Rental(Movie movie, int daysRented)
         {
-            _movie = movie;
-            _daysRented = daysRented;
+            Movie = movie;
+            DaysRented = daysRented;
         }
 
         public double GetCost()

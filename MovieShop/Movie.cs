@@ -17,7 +17,27 @@ namespace MovieShop
         public const int Childrens = 2;
 
         public string Title { get; }
-        public int PriceCode { get; set; }
+        public int PriceCode
+        { 
+            get => _priceState.GetPriceCode(); 
+            set
+            {
+                switch (value)
+                {
+                    case Regular:
+                        _priceState = new RegularPrice();
+                        break;
+                    case NewRelease:
+                        _priceState = new NewReleasePrice();
+                        break;
+                    case Childrens:
+                        _priceState = new ChildrensPrice();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException("priceCode");
+                }
+            }
+        }
 
         public Movie(string title, int priceCode)
         {
@@ -27,40 +47,12 @@ namespace MovieShop
 
         public double GetCost(int daysRented)
         {
-            double cost = 0;
-
-            switch (PriceCode)
-            {
-                case Regular:
-                    cost += 2;
-                    if (daysRented > 2)
-                    {
-                        cost += (daysRented - 2) * 1.5;
-                    }
-                    break;
-                case NewRelease:
-                    cost += daysRented * 3;
-                    break;
-                case Childrens:
-                    cost += 1.5;
-                    if (daysRented > 3)
-                    {
-                        cost += (daysRented - 3) * 1.5;
-                    }
-                    break;
-            }
-
-            return cost;
+            return _priceState.GetCost(daysRented);
         }
 
         public int GetFrequentRenterPoints(int daysRented)
         {
-            // Двойной бонус за долгий прокат новинки
-            if (PriceCode == NewRelease && daysRented > 1)
-            {
-                return 2;
-            }
-            return 1;
+            return _priceState.GetFrequentRenterPoints(daysRented);
         }
     }
 }
